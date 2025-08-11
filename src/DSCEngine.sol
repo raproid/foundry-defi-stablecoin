@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.19;
+
+/*
+* @title DSCEngine
+* @author Raproid
+*
+* The system is designed to be as minimal as possible, and have the tokens maintain a 1 token = 1 USD peg.
+*
+* The stablecoin is:
+* — Exogenous Collateralized
+* — Algorithmically Stable
+* — USD pegged
+*
+* It is similar to DAI if DAI had no governance, no fees, and was only backed by wBTC and wETH.
+*
+* The system should always be overcollateralized, and at no point should total_deposited_collateral_value be <= total_minted_dsc_value.
+*
+* @notice This contract is the core of the DSC System. It handles all the logic minting and redeeming DSC, as well as depositing and withdrawing collateral.
+* @notice: This contract is loosely based on the MakerDAO DSS (DAI) system.
+
+contract DSCEngine {
+    /* ERRORS */
+    error DSCEngine__CollateralNotAllowed();
+    error DSCEngine__MustBeMoreThanZero();
+    error DSCEngine__NotEnoughCollateral();
+    error DSCEngine__NotEnoughDscMinted();
+    error DSCEngine__NotEnoughDscBurned();
+    error DSCEngine__NotEnoughCollateralToCoverDsc();
+
+    /* EVENTS */
+    event CollateralDeposited(address indexed user, address indexed collateral, uint256 amount);
+    event CollateralWithdrawn(address indexed user, address indexed collateral, uint256 amount);
+    event DscMinted(address indexed user, uint256 amount);
+    event DscBurned(address indexed user, uint256 amount);
+
+    function depositCollateralAndMintDsc() external {}
+
+    function depositCollateral() external {}
+
+    function mintDsc() external {}
+
+    function redeemCollateralForDsc() external {}
+
+    function redeemCollateral() external {}
+
+    // Allows users to quickly burn some DSC and redeem part of their collateral so they can provide it back to the system to maintain their collateralization ratio and avoid being liquidated.
+    function burnDsc() external {}
+
+    function liquidate() external {}
+
+    function getHealthFactor() external view {}
+}
