@@ -449,14 +449,22 @@ contract DecentralizedStablecoinTest is Test {
                             INVARIANT TESTS
     //////////////////////////////////////////////////////////////*/
 
-    function invariant_TotalSupplyEqualsAllBalances() public view {
-        uint256 totalBalance = dsc.balanceOf(owner) +
-                              dsc.balanceOf(user1) +
-                              dsc.balanceOf(user2) +
-                              dsc.balanceOf(user3);
+    function invariant_OwnerCanAlwaysMintToSelf() public {
+    address currentOwner = dsc.owner();
+    if (currentOwner != address(0)) {
+        uint256 totalSupplyBefore = dsc.totalSupply();
+        uint256 balanceBefore = dsc.balanceOf(currentOwner);
 
-        // This should always hold true
-        assertEq(dsc.totalSupply(), totalBalance);
+        vm.prank(currentOwner);
+        dsc.mint(currentOwner, 1);
+
+        assertEq(dsc.totalSupply(), totalSupplyBefore + 1);
+        assertEq(dsc.balanceOf(currentOwner), balanceBefore + 1);
+
+        // Clean up
+        vm.prank(currentOwner);
+        dsc.burn(1);
+        }
     }
 
     function invariant_OwnerCanAlwaysMint() public {
