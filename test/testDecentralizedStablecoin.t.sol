@@ -3,10 +3,10 @@ pragma solidity ^0.8.19;
 
 import {Test} from "forge-std/Test.sol";
 import {console} from "forge-std/console.sol";
-import {DecentralizedStablecoin} from "../src/DecentralizedStablecoin.sol";
+import {DecentralizedStableCoin} from "../src/DecentralizedStableCoin.sol";
 
 contract DecentralizedStablecoinTest is Test {
-    DecentralizedStablecoin public dsc;
+    DecentralizedStableCoin public dsc;
 
     address public owner;
     address public user1;
@@ -25,7 +25,7 @@ contract DecentralizedStablecoinTest is Test {
         user3 = makeAddr("user3");
 
         vm.prank(owner);
-        dsc = new DecentralizedStablecoin();
+        dsc = new DecentralizedStableCoin();
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -68,14 +68,14 @@ contract DecentralizedStablecoinTest is Test {
     }
 
     function test_MintRevertsWithZeroAddress() public {
-        vm.expectRevert(DecentralizedStablecoin.DecentralizedStablecoin__CannotBeZeroAddress.selector);
+        vm.expectRevert(DecentralizedStableCoin.DecentralizedStableCoin__CannotBeZeroAddress.selector);
 
         vm.prank(owner);
         dsc.mint(address(0), INITIAL_MINT_AMOUNT);
     }
 
     function test_MintRevertsWithZeroAmount() public {
-        vm.expectRevert(DecentralizedStablecoin.DecentralizedStablecoin__MustBeMoreThanZero.selector);
+        vm.expectRevert(DecentralizedStableCoin.DecentralizedStableCoin__MustBeMoreThanZero.selector);
 
         vm.prank(owner);
         dsc.mint(user1, 0);
@@ -137,7 +137,7 @@ contract DecentralizedStablecoinTest is Test {
         vm.prank(owner);
         dsc.mint(owner, INITIAL_MINT_AMOUNT);
 
-        vm.expectRevert(DecentralizedStablecoin.DecentralizedStablecoin__MustBeMoreThanZero.selector);
+        vm.expectRevert(DecentralizedStableCoin.DecentralizedStableCoin__MustBeMoreThanZero.selector);
 
         vm.prank(owner);
         dsc.burn(0);
@@ -148,14 +148,14 @@ contract DecentralizedStablecoinTest is Test {
         vm.prank(owner);
         dsc.mint(owner, INITIAL_MINT_AMOUNT);
 
-        vm.expectRevert(DecentralizedStablecoin.DecentralizedStablecoin__BurnAmountExceedsBalance.selector);
+        vm.expectRevert(DecentralizedStableCoin.DecentralizedStableCoin__BurnAmountExceedsBalance.selector);
 
         vm.prank(owner);
         dsc.burn(INITIAL_MINT_AMOUNT + 1);
     }
 
     function test_BurnRevertsWithNoBalance() public {
-        vm.expectRevert(DecentralizedStablecoin.DecentralizedStablecoin__BurnAmountExceedsBalance.selector);
+        vm.expectRevert(DecentralizedStableCoin.DecentralizedStableCoin__BurnAmountExceedsBalance.selector);
 
         vm.prank(owner);
         dsc.burn(1);

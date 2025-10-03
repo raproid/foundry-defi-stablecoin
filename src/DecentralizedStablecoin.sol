@@ -15,11 +15,11 @@ pragma solidity ^0.8.19;
 import {ERC20, ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract DecentralizedStablecoin is ERC20Burnable, Ownable {
+contract DecentralizedStableCoin is ERC20Burnable, Ownable {
     /* ERRORS */
-    error DecentralizedStablecoin__CannotBeZeroAddress();
-    error DecentralizedStablecoin__BurnAmountExceedsBalance();
-    error DecentralizedStablecoin__MustBeMoreThanZero();
+    error DecentralizedStableCoin__CannotBeZeroAddress();
+    error DecentralizedStableCoin__BurnAmountExceedsBalance();
+    error DecentralizedStableCoin__MustBeMoreThanZero();
 
     /* CONSTRUCTOR */
     constructor() ERC20("Decentralized Stablecoin", "DSC") Ownable(msg.sender){}
@@ -27,10 +27,10 @@ contract DecentralizedStablecoin is ERC20Burnable, Ownable {
     /* PUBLIC FUNCTIONS */
     function mint(address _to, uint256 _amount) external onlyOwner returns (bool) {
         if(_to == address(0)) {
-            revert DecentralizedStablecoin__CannotBeZeroAddress();
+            revert DecentralizedStableCoin__CannotBeZeroAddress();
         }
         if( _amount <= 0 ) {
-            revert DecentralizedStablecoin__MustBeMoreThanZero();
+            revert DecentralizedStableCoin__MustBeMoreThanZero();
         }
         _mint(_to, _amount);
         return true;
@@ -39,10 +39,10 @@ contract DecentralizedStablecoin is ERC20Burnable, Ownable {
     function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
         if (_amount <= 0) {
-            revert DecentralizedStablecoin__MustBeMoreThanZero();
+            revert DecentralizedStableCoin__MustBeMoreThanZero();
         }
         if (balance < _amount) {
-            revert DecentralizedStablecoin__BurnAmountExceedsBalance();
+            revert DecentralizedStableCoin__BurnAmountExceedsBalance();
         }
         super.burn(_amount);
     }
